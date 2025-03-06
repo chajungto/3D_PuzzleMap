@@ -19,14 +19,14 @@ public class PlayerController : MonoBehaviour
 
     public CinemachineBrain mainCam;
 
-    [Header("Look")]
-    public Transform cameraContainer;
-    public float minXLook;
-    public float maxXLook;
-    private float camCurXRot;
-    public float lookSensitivity;
-    private Vector2 mouseDelta;
-    public bool canLook = true;
+    //[Header("Look")]
+    //public Transform cameraContainer;
+    //public float minXLook;
+    //public float maxXLook;
+    //private float camCurXRot;
+    //public float lookSensitivity;
+    //private Vector2 mouseDelta;
+    //public bool canLook = true;
 
 
     [Header("애니메이션")]
@@ -43,13 +43,13 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    private void LateUpdate()
-    {
-        if (canLook)
-        {
-            CameraLook();
-        }
-    }
+    //private void LateUpdate()
+    //{
+    //    if (canLook)
+    //    {
+    //        CameraLook();
+    //    }
+    //}
 
     void Move()
     {
@@ -62,7 +62,10 @@ public class PlayerController : MonoBehaviour
         cameraRight.y = 0f;
         cameraRight.Normalize();
 
-        Vector3 dir = cameraForward * curMovementInput.y + cameraRight * curMovementInput.x;
+        Vector3 moveDir = new Vector3(curMovementInput.x, 0, curMovementInput.y);
+        Vector3 dir = mainCam.transform.TransformDirection(moveDir);
+        dir.y = 0f;
+        dir.Normalize();
 
         //이동 방향이 바뀔 때만 회전 적용???? Slerp lerp 차이 없음??
         if (dir != Vector3.zero )
@@ -93,18 +96,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void CameraLook()
-    {
-        camCurXRot += mouseDelta.y * lookSensitivity;
-        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-        cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
+    //void CameraLook()
+    //{
+    //    camCurXRot += mouseDelta.y * lookSensitivity;
+    //    camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
+    //    cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
-        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
-    }
+    //    transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+    //}
 
-    public void OnLook(InputAction.CallbackContext context)
-    {
-        mouseDelta = context.ReadValue<Vector2>();
-    }
+    //public void OnLook(InputAction.CallbackContext context)
+    //{
+    //    mouseDelta = context.ReadValue<Vector2>();
+    //}
 
 }
