@@ -19,18 +19,14 @@ public class PlayerController : MonoBehaviour
 
     public CinemachineBrain mainCam;
 
-    //[Header("Look")]
-    //public Transform cameraContainer;
-    //public float minXLook;
-    //public float maxXLook;
-    //private float camCurXRot;
-    //public float lookSensitivity;
-    //private Vector2 mouseDelta;
-    //public bool canLook = true;
-
+    [Header("점프")]
+    public float jumpPower;
 
     [Header("애니메이션")]
     private Animator _animator;
+
+    [Header("바닥 레이어")]
+    public LayerMask groundLayerMask;
 
     void Awake()
     {
@@ -38,18 +34,10 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         Move();
     }
-
-    //private void LateUpdate()
-    //{
-    //    if (canLook)
-    //    {
-    //        CameraLook();
-    //    }
-    //}
 
     void Move()
     {
@@ -74,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (curMovementInput != Vector2.zero)
         {
-            _rigidbody.velocity = targetRotation * Vector3.forward * moveSpeed * Time.deltaTime;
+            _rigidbody.velocity = targetRotation * Vector3.forward * moveSpeed;
         }
     }
 
@@ -94,18 +82,40 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //void CameraLook()
-    //{
-    //    camCurXRot += mouseDelta.y * lookSensitivity;
-    //    camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-    //    cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        //땅에 닿았는지의 여부 추가
+        if (context.phase == InputActionPhase.Started && isGrounded())
+        {
+            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            //_animator.SetTrigger("isJumping");
+        }
+        else
+        {
+            //_animator.SetBool("isJumping", false);
+        }
+    }
 
-    //    transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
-    //}
+    bool isGrounded()
+    {
+        //Ray 비교 상하좌우
+        Ray[] rays = new Ray[4]
+        {
+            new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down)
+        };
 
-    //public void OnLook(InputAction.CallbackContext context)
-    //{
-    //    mouseDelta = context.ReadValue<Vector2>();
-    //}
+        for (int i = 0; i < rays.Length; i++)
+        {
+            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
