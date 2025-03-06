@@ -62,22 +62,20 @@ public class PlayerController : MonoBehaviour
         cameraRight.y = 0f;
         cameraRight.Normalize();
 
-        Vector3 moveDir = new Vector3(curMovementInput.x, 0, curMovementInput.y);
-        Vector3 dir = mainCam.transform.TransformDirection(moveDir);
-        dir.y = 0f;
-        dir.Normalize();
+        Vector3 dir = cameraForward * curMovementInput.y + cameraRight * curMovementInput.x;
 
         //이동 방향이 바뀔 때만 회전 적용???? Slerp lerp 차이 없음??
-        if (dir != Vector3.zero )
+        Quaternion targetRotation = transform.GetChild(0).rotation;
+        if (dir != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            targetRotation = Quaternion.LookRotation(dir);
             transform.GetChild(0).rotation = Quaternion.Lerp(transform.GetChild(0).rotation, targetRotation, Time.deltaTime * rotateSpeed);
         }
 
-        //속도 대입
-        dir *= moveSpeed;
-        dir.y = _rigidbody.velocity.y;
-        _rigidbody.velocity = dir;
+        if (curMovementInput != Vector2.zero)
+        {
+            _rigidbody.velocity = targetRotation * Vector3.forward * moveSpeed * Time.deltaTime;
+        }
     }
 
 
