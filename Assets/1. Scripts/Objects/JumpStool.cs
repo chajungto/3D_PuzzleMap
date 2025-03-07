@@ -12,11 +12,4 @@ public class JumpStool : Stool
         }
     }
 
-    protected override void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            
-        }
-    }
 }

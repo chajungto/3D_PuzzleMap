@@ -8,6 +8,7 @@ public class ClosePanel : MonoBehaviour
 
     public void Close()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
         tutoPanel.SetActive(false);
     }

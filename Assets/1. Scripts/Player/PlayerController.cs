@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
+        //커서 없애기
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
@@ -138,7 +140,7 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
 
         //점프 중이면서 y속도가 0 미만인 경우????????
-        if ((isJumping && _rigidbody.velocity.y <= -0.1f))
+        if ((isJumping && _rigidbody.velocity.y <= -1f))
         {
             _animator.SetBool("isFalling", true);
         }

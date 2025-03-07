@@ -17,6 +17,7 @@ public class TutoStool : Stool
 
     public void OpenPanel()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         tutoInfoText.text = tutoInfo.TutoText;
         Time.timeScale = 0f;
         tutoPanel.SetActive(true);
@@ -24,6 +25,7 @@ public class TutoStool : Stool
 
     public void ClosePanel()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
         tutoPanel.SetActive(false);
     }
