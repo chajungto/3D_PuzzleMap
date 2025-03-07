@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc0cd263be6b4941a2ee9a424cc4968, type: 3}
+  m_Name: TutoInfoForStage00
+  m_EditorClassIdentifier: 
+  stage: 0
+  tutoText: "\uCD08\uB85D \uBC1C\uD310\uC740 \uC2A4\uD3F0\uD3EC\uC778\uD2B8\uC785\uB2C8\uB2E4.
+    \uC2A4\uD398\uC774\uC2A4\uB85C \uC810\uD504\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4."

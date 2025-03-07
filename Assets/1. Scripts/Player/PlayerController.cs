@@ -40,10 +40,10 @@ public class PlayerController : MonoBehaviour
         //떨림 방지 
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 
-        if (isGrounded())
-        {
-            Move();
-        }
+        isGrounded();
+
+        Move();
+
     }
 
     void Move()
@@ -69,7 +69,9 @@ public class PlayerController : MonoBehaviour
         //이동
         if (curMovementInput != Vector2.zero)
         {
-            _rigidbody.velocity = targetRotation * Vector3.forward * moveSpeed;
+            Vector3 newVector = targetRotation * Vector3.forward * moveSpeed;
+            newVector.y = _rigidbody.velocity.y;
+            _rigidbody.velocity = newVector;
         }
     }
 
@@ -95,9 +97,17 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
             //_rigidbody.AddForce(Vector2.right, ForceMode.Impulse);
-            _animator.SetBool("isJumping",true);
+            _animator.SetTrigger("isJumping");
             isJumping = true;
         }
+
+    }
+
+    public void ForcedJump()
+    {
+        _rigidbody.AddForce(Vector2.up * jumpPower * 2, ForceMode.Impulse);
+        _animator.SetTrigger("isJumping");
+        isJumping = true;
     }
 
     bool isGrounded()
@@ -117,7 +127,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(rays[i], 0.05f, groundLayerMask))
             {
                 isJumping = false;
-                _animator.SetBool("isJumping", false);
+                //_animator.SetBool("isJumping", false);
                 _animator.SetBool("isGrounded", true);
                 _animator.SetBool("isFalling", false);
                 return true;
@@ -128,7 +138,7 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
 
         //점프 중이면서 y속도가 0 미만인 경우????????
-        if ((isJumping && _rigidbody.velocity.y < 0f))
+        if ((isJumping && _rigidbody.velocity.y <= -0.1f))
         {
             _animator.SetBool("isFalling", true);
         }
