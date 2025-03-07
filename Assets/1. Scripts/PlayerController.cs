@@ -16,10 +16,11 @@ public class PlayerController : MonoBehaviour
     public Vector2 curMovementInput;
     //회전 속도
     public float rotateSpeed;
-
+    //메인 캠 -> camera.Main으로 바꿀 예정
     public CinemachineBrain mainCam;
 
     [Header("점프")]
+    private bool isJumping;
     public float jumpPower;
 
     [Header("애니메이션")]
@@ -34,9 +35,15 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
-        Move();
+        //떨림 방지 
+        _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+
+        if (isGrounded())
+        {
+            Move();
+        }
     }
 
     void Move()
@@ -59,7 +66,7 @@ public class PlayerController : MonoBehaviour
             targetRotation = Quaternion.LookRotation(dir);
             transform.GetChild(0).rotation = Quaternion.Lerp(transform.GetChild(0).rotation, targetRotation, Time.deltaTime * rotateSpeed);
         }
-
+        //이동
         if (curMovementInput != Vector2.zero)
         {
             _rigidbody.velocity = targetRotation * Vector3.forward * moveSpeed;
@@ -79,7 +86,6 @@ public class PlayerController : MonoBehaviour
             curMovementInput = Vector2.zero;
             _animator.SetBool("isWalking", false);
         }
-
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -88,11 +94,9 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && isGrounded())
         {
             _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-            //_animator.SetTrigger("isJumping");
-        }
-        else
-        {
-            //_animator.SetBool("isJumping", false);
+            //_rigidbody.AddForce(Vector2.right, ForceMode.Impulse);
+            _animator.SetBool("isJumping",true);
+            isJumping = true;
         }
     }
 
@@ -109,11 +113,26 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < rays.Length; i++)
         {
-            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
+            //닿는 게 있다면 true 반환, 그전 세팅도 함께
+            if (Physics.Raycast(rays[i], 0.05f, groundLayerMask))
             {
+                isJumping = false;
+                _animator.SetBool("isJumping", false);
+                _animator.SetBool("isGrounded", true);
+                _animator.SetBool("isFalling", false);
                 return true;
             }
         }
+        //닿는 게 없다면 false 반환, 그전에 떨어지고 있는지 여부도 세팅
+        _animator.SetBool("isGrounded", false);
+        isJumping = true;
+
+        //점프 중이면서 y속도가 0 미만인 경우????????
+        if ((isJumping && _rigidbody.velocity.y < 0f))
+        {
+            _animator.SetBool("isFalling", true);
+        }
+
         return false;
     }
 
