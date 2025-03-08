@@ -25,11 +25,3 @@ public class ItemData : ScriptableObject
     public int ExtraSpeed { get { return extraSpeed; } }
 
 }
-
-public enum ItemType
-{
-    Interact,
-    Heal,
-    Buff,
-    DeBuff
-}

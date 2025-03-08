@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -8,6 +9,8 @@ public class Player : MonoBehaviour
 {
     public PlayerController playerController;
     public int health;
+
+    public Action InteractItem;
 
     void Awake()
     {

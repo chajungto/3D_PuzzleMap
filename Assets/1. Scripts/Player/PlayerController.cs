@@ -10,31 +10,26 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
 
     [Header("움직임 관련")]
-    //움직임 속도
-    public float moveSpeed;
-    //현재 입력되는 방향
-    public Vector2 curMovementInput;
-    //회전 속도
-    public float rotateSpeed;
-    //메인 캠 -> camera.Main으로 바꿀 예정
-    public CinemachineBrain mainCam;
+    public float moveSpeed;             //움직임 속도
+    public Vector2 curMovementInput;    //현재 입력되는 방향
+    public float rotateSpeed;           //회전 속도
 
     [Header("점프")]
-    private bool isJumping;
-    public float jumpPower;
+    private bool isJumping;             //점프 여부
+    public float jumpPower;             //점프 힘
 
     [Header("애니메이션")]
-    private Animator _animator;
+    private Animator _animator;         
 
     [Header("바닥 레이어")]
     public LayerMask groundLayerMask;
 
     void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<Animator>();
-        //커서 없애기
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
@@ -42,26 +37,25 @@ public class PlayerController : MonoBehaviour
         //떨림 방지 
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 
+        //계속 체크해줌
         isGrounded();
-
         Move();
-
     }
 
     void Move()
     {
         //여긴 카메라의 정면을 기준으로 벡터값을 받아냄
-        Vector3 cameraForward = mainCam.transform.forward;
-        cameraForward.y = 0f; // Y축 영향을 제거
+        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward.y = 0f; 
         cameraForward.Normalize();
 
-        Vector3 cameraRight = mainCam.transform.right;
+        Vector3 cameraRight = Camera.main.transform.right;
         cameraRight.y = 0f;
         cameraRight.Normalize();
 
         Vector3 dir = cameraForward * curMovementInput.y + cameraRight * curMovementInput.x;
 
-        //이동 방향이 바뀔 때만 회전 적용???? Slerp lerp 차이 없음??
+        //회전
         Quaternion targetRotation = transform.GetChild(0).rotation;
         if (dir != Vector3.zero)
         {
@@ -76,7 +70,6 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity = newVector;
         }
     }
-
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -139,7 +132,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isGrounded", false);
         isJumping = true;
 
-        //점프 중이면서 y속도가 0 미만인 경우????????
+        //점프 중이면서 y속도가 -1 이하인 경우
         if ((isJumping && _rigidbody.velocity.y <= -1f))
         {
             _animator.SetBool("isFalling", true);
