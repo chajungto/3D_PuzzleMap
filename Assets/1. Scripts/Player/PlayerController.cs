@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     public float jumpPower;             //점프 힘
 
     [Header("애니메이션")]
-    private Animator _animator;         
+    private Animator _animator;
 
     [Header("바닥 레이어")]
     public LayerMask groundLayerMask;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         //떨림 방지 
         _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
 
-        //계속 체크해줌
+        //움직일 수 있을때 체크해줌
         isGrounded();
         Move();
     }
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         //여긴 카메라의 정면을 기준으로 벡터값을 받아냄
         Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0f; 
+        cameraForward.y = 0f;
         cameraForward.Normalize();
 
         Vector3 cameraRight = Camera.main.transform.right;
@@ -140,6 +140,8 @@ public class PlayerController : MonoBehaviour
 
         return false;
     }
+
+
 
 
 }

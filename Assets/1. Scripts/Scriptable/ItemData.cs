@@ -19,9 +19,25 @@ public class ItemData : ScriptableObject
     private int extraHealth;
     public int ExtraHealth { get { return extraHealth; } }
 
-    //추가 
+    //추가 속도
     [SerializeField]
     private int extraSpeed;
     public int ExtraSpeed { get { return extraSpeed; } }
 
+    //아이템 타입
+    [SerializeField]
+    private ItemType type;
+    public ItemType Type { get { return type; } }
+
+    //아이템 타입
+    [SerializeField]
+    private bool isCorrect;
+    public bool IsCorrect { get { return isCorrect; } }
+}
+
+public enum ItemType
+{
+    Key,
+    Map,
+    Buff
 }

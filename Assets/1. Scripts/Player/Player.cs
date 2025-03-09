@@ -1,33 +1,45 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
     public PlayerController playerController;
     public int health;
+    int maxHealth = 100;
 
-    public Action InteractItem;
+    public ItemData itemData;
+    public Action interactItem;
 
     void Awake()
     {
+        GameManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void Update()
     {
-        ReviveAfterFall();
+        Revive();
     }
 
-    void ReviveAfterFall()
+    public void Heal(int amount)
+    {
+        health += amount;
+        if (health >= maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            Revive();
+        }
+    }
+
+    void Revive()
     {
         if (isFallToEnd())
         {

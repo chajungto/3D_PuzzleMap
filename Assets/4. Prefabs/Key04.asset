@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de24c257f568ba24abb546046ed48a00, type: 3}
   m_Name: Key04
   m_EditorClassIdentifier: 
-  itemName: "\uCD08\uB85D \uC5F4\uC1E0"
-  description: "\uC774\uAC70\uC77C\uAE4C..?"
+  itemName: "\uBE68\uAC15 \uC5F4\uC1E0"
+  description: "\uC774\uAC70\uC77C\uAE4C..? (E\uB97C \uB20C\uB7EC \uC120\uD0DD\uD558\uAE30)"
   extraHealth: -50
   extraSpeed: 0
