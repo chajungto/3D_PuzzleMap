@@ -1,8 +1,4 @@
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -91,7 +87,6 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && isGrounded())
         {
             _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-            //_rigidbody.AddForce(Vector2.right, ForceMode.Impulse);
             _animator.SetTrigger("isJumping");
             isJumping = true;
         }
@@ -122,7 +117,6 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(rays[i], 0.05f, groundLayerMask))
             {
                 isJumping = false;
-                //_animator.SetBool("isJumping", false);
                 _animator.SetBool("isGrounded", true);
                 _animator.SetBool("isFalling", false);
                 return true;

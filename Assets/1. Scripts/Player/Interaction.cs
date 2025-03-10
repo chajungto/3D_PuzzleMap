@@ -1,6 +1,4 @@
-using Cinemachine;
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -21,8 +19,10 @@ public class Interaction : MonoBehaviour
     public Text promptTextName;
     public Text promptTextDescription;
 
-    [Header("상호작용에 따른 카메라 전환")]
-    public StageEvent stageEvent;
+    [Header("StageEvent")]
+    public StageEvent stageEvent01;
+    public StageEvent stageEvent02;
+    public StageEvent stageEvent03;
 
     [Header("상호작용에 따른 Action")]
     public Action stageAction;
@@ -92,7 +92,7 @@ public class Interaction : MonoBehaviour
                 if (iData.IsCorrect)
                 {
                     GameManager.Instance.Player.Heal(iData.ExtraHealth);
-                    stageAction = stageEvent.Stage01Event;
+                    stageAction = stageEvent01.DoEvent;
                     stageAction.Invoke();
                 }
                 else
@@ -102,12 +102,12 @@ public class Interaction : MonoBehaviour
                 break;
 
             case ItemType.Map:
-                stageAction = stageEvent.Stage02Event;
+                stageAction = stageEvent02.DoEvent;
                 stageAction.Invoke();
                 break;
 
             case ItemType.GPS:
-                stageAction = stageEvent.Stage03Event;
+                stageAction = stageEvent03.DoEvent;
                 stageAction.Invoke();
                 break;
 

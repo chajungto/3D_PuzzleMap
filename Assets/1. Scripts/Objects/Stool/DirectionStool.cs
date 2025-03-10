@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DirectionStool : Stool
@@ -10,18 +8,12 @@ public class DirectionStool : Stool
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            StageEvent stageEvent = FindObjectOfType<StageEvent>();
-            if (stageEvent != null)
+            GPSEvent gpsEvent = FindObjectOfType<GPSEvent>();
+            if (gpsEvent != null)
             {
-                stageEvent.AddDirection(direction); 
+                gpsEvent.AddDirection(direction); 
                 Debug.Log(direction);
             }
         }
-
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-
     }
 }

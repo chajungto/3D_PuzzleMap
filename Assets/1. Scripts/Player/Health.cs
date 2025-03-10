@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +8,6 @@ public class Health : MonoBehaviour
     public float maxHealth;
     public Image uiBar;
 
-
     private void Awake()
     {
         curHealth = startHealth;
@@ -19,7 +16,6 @@ public class Health : MonoBehaviour
     private void Update()
     {
         uiBar.fillAmount = GetPercentage();
-
     }
 
     float GetPercentage()
