@@ -100,6 +100,12 @@ public class Interaction : MonoBehaviour
                     GameManager.Instance.Player.TakeDamage(50);
                 }
                 break;
+
+            case ItemType.Map:
+                stageAction = stageEvent.Stage02event;
+                stageAction.Invoke();
+                break;
+
             default: return;
         }
     }

@@ -41,9 +41,10 @@ public class Player : MonoBehaviour
 
     void Revive()
     {
-        if (isFallToEnd())
+        if (isFallToEnd() || health <= 0)
         {
             transform.position = GameManager.Instance.spawnPoint;
+            health = maxHealth;
         }
     }
 

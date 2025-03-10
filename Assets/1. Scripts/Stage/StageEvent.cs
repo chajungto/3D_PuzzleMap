@@ -7,6 +7,7 @@ public class StageEvent : MonoBehaviour
 {
     [Header("상호작용에 따른 카메라 전환")]
     public CinemachineVirtualCamera stage01Cam;
+    public CinemachineVirtualCamera stage02Cam;
 
     [Header("떨어질 큐브")]
     public GameObject fallenCube;
@@ -14,6 +15,11 @@ public class StageEvent : MonoBehaviour
     public void Stage01Event()
     {
         ChangeCam(stage01Cam, 200, 2);
+    }
+
+    public void Stage02event()
+    {
+        ChangeCam(stage02Cam, 200, 10);
     }
 
     public void FallCube()
@@ -39,7 +45,14 @@ public class StageEvent : MonoBehaviour
         cam.Priority = priority;
 
         yield return new WaitForSeconds(delay * 0.5f);
-        FallCube();
+        switch(cam)
+        {
+            case CinemachineVirtualCamera stage01Cam:
+                FallCube();
+                break;
+            default: break;
+        }
+        
         yield return new WaitForSeconds(delay * 0.5f);
 
         cam.Priority = originalPriority;
