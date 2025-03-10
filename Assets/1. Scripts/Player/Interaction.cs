@@ -102,7 +102,12 @@ public class Interaction : MonoBehaviour
                 break;
 
             case ItemType.Map:
-                stageAction = stageEvent.Stage02event;
+                stageAction = stageEvent.Stage02Event;
+                stageAction.Invoke();
+                break;
+
+            case ItemType.GPS:
+                stageAction = stageEvent.Stage03Event;
                 stageAction.Invoke();
                 break;
 

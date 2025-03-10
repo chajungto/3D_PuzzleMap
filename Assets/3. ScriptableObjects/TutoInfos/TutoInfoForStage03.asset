@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc0cd263be6b4941a2ee9a424cc4968, type: 3}
   m_Name: TutoInfoForStage03
   m_EditorClassIdentifier: 
-  stage: 1
-  tutoText: "\uC2A4\uD14C\uC774\uC9C0 3\uC758 \uD29C\uD1A0\uB9AC\uC5BC \uD14D\uC2A4\uD2B8"
+  stage: 3
+  tutoText: "\uB208\uC774 \uB0B4\uB9AC\uB294 \uBC29\uD5A5\uC73C\uB85C \uAC00\uC138\uC694!"

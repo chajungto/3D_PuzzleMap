@@ -39,5 +39,6 @@ public enum ItemType
 {
     Key,
     Map,
-    Buff
+    Buff,
+    GPS
 }
