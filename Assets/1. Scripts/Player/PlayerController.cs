@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float jumpPower;             //점프 힘
 
     [Header("애니메이션")]
-    private Animator _animator;
+    public Animator _animator;
 
     [Header("바닥 레이어")]
     public LayerMask groundLayerMask;
@@ -126,16 +126,12 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("isGrounded", false);
         isJumping = true;
 
-        //점프 중이면서 y속도가 -1 이하인 경우
-        if ((isJumping && _rigidbody.velocity.y <= -1f))
+        //점프 중이면서 y속도가 -0.5 이하인 경우
+        if ((isJumping && _rigidbody.velocity.y <= -0.5f))
         {
             _animator.SetBool("isFalling", true);
         }
 
         return false;
     }
-
-
-
-
 }

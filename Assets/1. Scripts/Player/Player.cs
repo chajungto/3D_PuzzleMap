@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     public ItemData itemData;
     public Action interactItem;
+    public Action onDeath;
 
     void Awake()
     {
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
         {
             transform.position = GameManager.Instance.spawnPoint;
             Heal(100);
+            onDeath?.Invoke();
         }
     }
 

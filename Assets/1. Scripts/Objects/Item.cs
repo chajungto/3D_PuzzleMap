@@ -20,6 +20,5 @@ public class Item : MonoBehaviour
     {
         GameManager.Instance.Player.itemData = data;
         GameManager.Instance.Player.interactItem?.Invoke();
-        //Destroy(gameObject);
     }
 }

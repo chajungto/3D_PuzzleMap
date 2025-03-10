@@ -23,6 +23,7 @@ public class Interaction : MonoBehaviour
     public StageEvent stageEvent01;
     public StageEvent stageEvent02;
     public StageEvent stageEvent03;
+    public StageEvent stageEvent04;
 
     [Header("상호작용에 따른 Action")]
     public Action stageAction;
@@ -108,6 +109,11 @@ public class Interaction : MonoBehaviour
 
             case ItemType.GPS:
                 stageAction = stageEvent03.DoEvent;
+                stageAction.Invoke();
+                break;
+
+            case ItemType.Buff:
+                stageAction = stageEvent04.DoEvent;
                 stageAction.Invoke();
                 break;
 
