@@ -4,8 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerController playerController;
-    public int health;
-    int maxHealth = 100;
+    public Health health;
 
     public ItemData itemData;
     public Action interactItem;
@@ -14,6 +13,7 @@ public class Player : MonoBehaviour
     {
         GameManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
+        health = GetComponent<Health>();
     }
 
     private void Update()
@@ -23,17 +23,13 @@ public class Player : MonoBehaviour
 
     public void Heal(int amount)
     {
-        health += amount;
-        if (health >= maxHealth)
-        {
-            health = maxHealth;
-        }
+        health.Add(amount);
     }
 
     public void TakeDamage(int amount)
     {
-        health -= amount;
-        if (health <= 0)
+        health.Subtract(amount);  
+        if(health.curHealth <= 0)
         {
             Revive();
         }
@@ -41,10 +37,10 @@ public class Player : MonoBehaviour
 
     void Revive()
     {
-        if (isFallToEnd() || health <= 0)
+        if (isFallToEnd() || health.curHealth <= 0)
         {
             transform.position = GameManager.Instance.spawnPoint;
-            health = maxHealth;
+            Heal(100);
         }
     }
 

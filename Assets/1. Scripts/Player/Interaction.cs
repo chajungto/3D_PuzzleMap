@@ -91,13 +91,13 @@ public class Interaction : MonoBehaviour
             case ItemType.Key:
                 if (iData.IsCorrect)
                 {
-                    GameManager.Instance.Player.Heal(100);
+                    GameManager.Instance.Player.Heal(iData.ExtraHealth);
                     stageAction = stageEvent.Stage01Event;
                     stageAction.Invoke();
                 }
                 else
                 {
-                    GameManager.Instance.Player.TakeDamage(50);
+                    GameManager.Instance.Player.TakeDamage(iData.ExtraHealth);
                 }
                 break;
 
