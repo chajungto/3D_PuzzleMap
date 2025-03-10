@@ -13,12 +13,18 @@ public class StageEvent : MonoBehaviour
 
     public void Stage01Event()
     {
-        Debug.Log("aaaaaaaaaaaaaaaaaa");
         ChangeCam(stage01Cam, 200, 2);
     }
 
     public void FallCube()
     {
+        fallenCube.AddComponent<Rigidbody>();
+        StartCoroutine(ChangeCamPriority(3f));
+    }
+
+    private IEnumerator ChangeCamPriority(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         fallenCube.SetActive(false);
     }
 
